@@ -1,0 +1,77 @@
+Microsoft Windows [Version 10.0.26200.6899]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\priya>mysql -u root -p
+Enter password: **************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE blood_donation_db;
+Query OK, 1 row affected (0.25 sec)
+
+mysql> USE blood_donation_db;
+Database changed
+mysql> CREATE TABLE donors (
+    ->     donor_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     name VARCHAR(100),
+    ->     gender VARCHAR(10),
+    ->     age INT,
+    ->     blood_group VARCHAR(5),
+    ->     city VARCHAR(50),
+    ->     phone VARCHAR(15),
+    ->     last_donation_date DATE
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE camps (
+    ->     camp_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     camp_name VARCHAR(100),
+    ->     location VARCHAR(100),
+    ->     date DATE,
+    ->     organizer VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE donations (
+    ->     donation_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     donor_id INT,
+    ->     camp_id INT,
+    ->     donation_date DATE,
+    ->     FOREIGN KEY (donor_id) REFERENCES donors(donor_id),
+    ->     FOREIGN KEY (camp_id) REFERENCES camps(camp_id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> USE blood_donation;
+ERROR 1049 (42000): Unknown database 'blood_donation'
+mysql> SELECT * FROM camps;
++---------+------------+------------+------------+-----------------+
+| camp_id | camp_name  | location   | date       | organizer       |
++---------+------------+------------+------------+-----------------+
+|       1 | Rakta Seva | Chandigarh | 2025-11-02 | Priyanka Tiwari |
++---------+------------+------------+------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM donations;
+Empty set (0.02 sec)
+
+mysql> SELECT * FROM donors;
++----------+-----------------+---------+------+-------------+-----------+------------+--------------------+
+| donor_id | name            | gender  | age  | blood_group | city      | phone      | last_donation_date |
++----------+-----------------+---------+------+-------------+-----------+------------+--------------------+
+|        1 | Priyanka Kumari | Unknown |   22 | O+          | Panchkula | 9350602295 | 2025-10-31         |
+|        2 | Rohit Tiwari    | Unknown |   20 | A+          | Pinjore   | 9817447854 | 2025-10-31         |
+|        3 | Aditi Arora     | Female  |   21 | A+          | Ambala    | 8930707893 | 2025-10-31         |
++----------+-----------------+---------+------+-------------+-----------+------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql>
